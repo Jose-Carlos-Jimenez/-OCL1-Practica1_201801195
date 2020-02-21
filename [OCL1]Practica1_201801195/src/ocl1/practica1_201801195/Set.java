@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author jose5
+ * @author Jose
  */
 public class Set {
     

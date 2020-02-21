@@ -6,10 +6,11 @@
 package ocl1.practica1_201801195;
 
 import java.util.ArrayList;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
  *
- * @author jose5
+ * @author Jose
  */
 public class Scanner {
     private ArrayList<Token> output;
@@ -29,6 +30,7 @@ public class Scanner {
     {
         entrada = entrada+"#";
         this.output = new ArrayList();
+        this.errors = new ArrayList();
         this.auxLex = "";
         this.state = 1;
         this.caso = 0;
@@ -321,7 +323,7 @@ public class Scanner {
     public void addToken(Token.type type, int row, int column) {
         this.output.add(new Token(type, auxLex, row, column));
         this.auxLex = "";
-        this.state = 0;
+        this.state = 1;
         this.caso = 0;
     }
     
@@ -371,6 +373,17 @@ public class Scanner {
             }
         }
         return groups;
+    }
+    
+    public void printTokens()
+    {
+        
+        System.out.println("-----PRINCIPIO------\n");
+        for(int i = 0; i< output.size();i++)
+        {
+            System.out.print(output.get(i).lexeme + " -> ");
+        }
+        System.out.println("\n-------FINAL-------");
     }
     
 }

@@ -7,7 +7,7 @@ package ocl1.practica1_201801195;
 
 /**
  *
- * @author jose5
+ * @author Jose
  */
 public class Token {
     

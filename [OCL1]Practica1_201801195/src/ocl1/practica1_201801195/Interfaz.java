@@ -8,12 +8,13 @@ package ocl1.practica1_201801195;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author jose5
+ * @author Jose
  */
 public class Interfaz extends javax.swing.JFrame {
 
@@ -117,6 +118,11 @@ public class Interfaz extends javax.swing.JFrame {
         jButton2.setAutoscrolls(true);
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextArea2.setEditable(false);
         jTextArea2.setBackground(new java.awt.Color(0, 0, 0));
@@ -183,9 +189,8 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -315,6 +320,13 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenu4MouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String text = jTextArea1.getText();
+        Scanner analyzer = new Scanner();
+        analyzer.Read(text);
+        analyzer.printTokens();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,15 +355,15 @@ public class Interfaz extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Interfaz().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Interfaz().setVisible(true);
         });
     }
-    
+    /*--------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------*/
     /* Customized method declaration */
-    
     public String openFile(File archive){
         String document = null;
         try{
@@ -363,7 +375,8 @@ public class Interfaz extends javax.swing.JFrame {
             }
             
         }
-        catch (Exception e){
+        catch (IOException e){
+            System.out.println(e);
         }
         return document;
     }
@@ -378,6 +391,11 @@ public class Interfaz extends javax.swing.JFrame {
         }
         return message;
     }
+    
+    /*--------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------
+    ----------------------------------------------------------------------*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

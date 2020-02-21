@@ -7,7 +7,7 @@ package ocl1.practica1_201801195;
 
 /**
  *
- * @author jose5
+ * @author Jose
  */
 public class OCL1Practica1_201801195 {
 
@@ -15,7 +15,8 @@ public class OCL1Practica1_201801195 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Interfaz window = new Interfaz();
+        window.setVisible(true);
     }
     
 }
