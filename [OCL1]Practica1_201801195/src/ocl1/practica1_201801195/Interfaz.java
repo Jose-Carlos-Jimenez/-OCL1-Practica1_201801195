@@ -5,12 +5,22 @@
  */
 package ocl1.practica1_201801195;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jose5
  */
 public class Interfaz extends javax.swing.JFrame {
 
+    JFileChooser selector = new JFileChooser();
+    File archive;
+    FileInputStream input;
+    FileOutputStream output;
     /**
      * Creates new form Interfaz
      */
@@ -190,12 +200,37 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
 
         jMenu2.setText("Abrir");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenu2);
 
         jMenu3.setText("Guardar");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenu3);
 
         jMenu4.setText("Guardar como");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenu1.add(jMenu4);
 
         jMenuBar1.add(jMenu1);
@@ -219,6 +254,66 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // METODO PARA ABRIR ARCHIVOS CON EXTENSIÓN .txt
+        if(selector.showDialog(null, "Abrir") == JFileChooser.APPROVE_OPTION)
+        {
+            archive = selector.getSelectedFile();
+            if(archive.canRead())
+            {
+                if(archive.getName().endsWith("txt"))
+                {
+                    String document = this.openFile(archive);
+                    jTextArea1.setText(document);
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        if(selector.getSelectedFile()!= null){
+            String document = jTextArea1.getText();
+            String message = this.saveFile(archive, document);
+            if(message != null)
+            {
+                JOptionPane.showMessageDialog(null, message);
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Aún no se ha abierto ningún archivo.");
+        }
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        // MÉTODO PARA GUARDAR ARCHIVOS
+        if(selector.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION){
+            archive = selector.getSelectedFile();
+            if(archive.getName().endsWith("txt"))
+            {
+                String document = jTextArea1.getText();
+                String message = this.saveFile(archive, document);
+                if(message != null)
+                {
+                    JOptionPane.showMessageDialog(null, message);
+                } else
+                {
+                    JOptionPane.showMessageDialog(null, "Archivo no compatible.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Guardar documento con la extension correspondiente.");
+            }
+        }
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -253,6 +348,35 @@ public class Interfaz extends javax.swing.JFrame {
                 new Interfaz().setVisible(true);
             }
         });
+    }
+    
+    /* Customized method declaration */
+    
+    public String openFile(File archive){
+        String document = null;
+        try{
+            input = new FileInputStream(archive);
+            int ascii;
+            while((ascii = input.read()) != -1){
+                char character = (char)ascii;
+                document += character;
+            }
+            
+        }
+        catch (Exception e){
+        }
+        return document;
+    }
+    public String saveFile(File archive, String document){
+        String message = null;
+        try {
+            output = new FileOutputStream(archive);
+            byte[] bytxt =  document.getBytes();
+            output.write(bytxt);
+            message = "Archivo guardado.";
+        } catch (Exception e) {
+        }
+        return message;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
