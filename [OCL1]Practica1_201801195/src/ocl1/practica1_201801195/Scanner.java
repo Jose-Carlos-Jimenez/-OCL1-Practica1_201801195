@@ -6,7 +6,6 @@
 package ocl1.practica1_201801195;
 
 import java.util.ArrayList;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
  *
@@ -15,6 +14,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 public class Scanner {
     private ArrayList<Token> output;
     private ArrayList<Token> errors;
+    public ArrayList<RegularExpression> expresions;
     private int state;
     private int caso;
     private String auxLex;
@@ -381,9 +381,37 @@ public class Scanner {
         System.out.println("-----PRINCIPIO------\n");
         for(int i = 0; i< output.size();i++)
         {
-            System.out.print(output.get(i).lexeme + " -> ");
+            System.out.print(output.get(i).lexeme + " -> " );
         }
         System.out.println("\n-------FINAL-------");
+    }
+    
+    public void getRegularExpressions()
+    {
+        for(int i = 0; i< output.size();i++)
+        {
+            if(output.get(i).t == Token.type.ID && output.get(i+1).t == Token.type.ARROW && output.get(i+3).t != Token.type.VIRGULILLA)
+            {
+                String name = output.get(i).lexeme;
+                RegularExpression n = new RegularExpression(name);
+                
+                i += 2;
+                Node niu = new Node(new Token(Token.type.CONCATENACION,".",0,0));
+                n.nodes.add(niu);
+                
+                Token aux = output.get(i);
+                
+                while(aux.t != Token.type.PUNTO_Y_COMA)
+                {
+                    Node nuevo = new Node(aux);
+                    n.nodes.add(nuevo);
+                    i++;
+                    aux = output.get(i);
+                }
+                n.nodes.add(new Node(new Token(Token.type.FIN_CADENA,"#",0,0)));
+                expresions.add(n);
+            }
+        }
     }
     
 }

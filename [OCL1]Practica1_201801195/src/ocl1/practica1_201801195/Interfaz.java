@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -22,6 +23,7 @@ public class Interfaz extends javax.swing.JFrame {
     File archive;
     FileInputStream input;
     FileOutputStream output;
+    ArrayList<BinaryTree> trees;
     /**
      * Creates new form Interfaz
      */
@@ -324,7 +326,14 @@ public class Interfaz extends javax.swing.JFrame {
         String text = jTextArea1.getText();
         Scanner analyzer = new Scanner();
         analyzer.Read(text);
-        analyzer.printTokens();
+        analyzer.getRegularExpressions();
+        for(int i = 0;i < analyzer.expresions.size();i++)
+        {
+            BinaryTree nuevo = new BinaryTree(analyzer.expresions.get(i));
+            nuevo.fill();
+            nuevo.enumerateLeaf(nuevo.root);
+            this.trees.add(nuevo);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
